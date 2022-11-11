@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+ 
+ 
+ 
+    <script>
+let name = {
+    fname:"Ales",
+    lname:"Kruba"
+}
+
+let printName = (hometown,state,zip) => {
+    console.log(name.fname , ' ' ,name.lname, ' ',hometown, ' ',state,zip)
+}
+
+ //    let printMyname  = printName.bind(name,'Brno')
+ //    printMyname('Moravia','61300')
+
+Function.prototype.NEWbind = function(...args){
+        let obj = this,
+        params = args.slice(1)
+
+        return function (...args2) {
+            obj.apply(args[0],[...params,...args2])
+        }
+    }
+
+    let printMyname2 = printName.NEWbind(name,'Brno');
+    printMyname2('Moravia','61300')
+
+    </script> 
+</body>
+</html>
