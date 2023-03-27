@@ -1,0 +1,20 @@
+*{
+    margin: 0;
+    background-color: bisque;
+}
+
+.mainDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+}
+
+#my-element{
+    
+    background-color: black;
+    border-radius: 50%;
+
+
+}
