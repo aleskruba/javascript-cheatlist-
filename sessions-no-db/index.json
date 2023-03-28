@@ -1,0 +1,54 @@
+const express = require('express');
+const session =  require('express-session')// only in dev
+const csurf = require("csurf")
+npm 
+
+const app = express();
+const PORT = 3000
+
+app.use(express.urlencoded({extended:false}))
+
+
+app.use(
+    session({
+        secret:"my secret",
+        cookie:{},
+        resave:false,
+        saveUninitialized:false
+    })
+)
+
+app.use(csurf())
+
+app.get("/", (req, res) => {
+  let name = "Guest"
+
+  if (req.session.user) name = req.session.user
+
+  res.send(`
+  <h1>Welcome, ${name}</h1>
+  <form action="/choose-name" method="POST">
+    <input type="text" name="name" placeholder="Your name" autocomplete="off">
+    <input type="hidden" name="_csrf" value="${req.csrfToken()}">
+    <button>Submit</button>
+  </form>
+  <form action="/logout" method="POST">
+    <input type="hidden" name="_csrf" value="${req.csrfToken()}">
+    <button>Logout</button>
+  </form>
+  `)
+})
+
+app.post("/choose-name", (req, res) => {
+  req.session.user = req.body.name.trim()
+  res.send(`<p>Thank you</p> <a href="/">Back home</a>`)
+})
+
+app.post("/logout", (req, res) => {
+  req.session.destroy(err => {
+    res.redirect("/")
+  })
+})
+
+
+app.listen(PORT,()=>{console.log(`listen on port ${PORT}`)})
