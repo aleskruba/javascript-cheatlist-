@@ -42,18 +42,21 @@
                 name: '',
                 age: ''
             };
+        
+
 
         let myObj_deserialzied = JSON.parse(localStorage.getItem("name"))
             
-        const user = document.getElementById('spanID')
 
-            user.innerHTML = ''
+            const user = document.getElementById('spanID')
 
-            if(myObj_deserialzied.name) {
+           
+
+            if(myObj_deserialzied?.name) {
                 user.innerHTML = myObj_deserialzied.name
                 loginID.style ="display: none;"
                 mainID.style = "display: block"
-            }else if(!myObj_deserialzied.name) {
+            }else if(!myObj_deserialzied?.name) {
                 loginID.style ="display: block;"
                  mainID.style = "display: none"
                  user.innerHTML = 'newuser'
@@ -68,7 +71,7 @@
              newObj.age = age.value
            
 
-           if (name == '' || age == '') {
+           if (newObj.name == '' || newObj.age == '') {
             alert('cannot be empty')
            }else {
            user.innerHTML = newObj.name 
