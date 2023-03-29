@@ -30,27 +30,39 @@
     </div>
 
     <script>
-        
+
+        const date1 = new Date().setDate(new Date().getDate() )
+       
         const loginID = document.getElementById('loginID')
         const mainID = document.getElementById('mainID')
 
-        let name = localStorage.getItem("name")
-        let age = localStorage.getItem("age")
 
-                  
         let newObj = {
                 name: '',
-                age: ''
+                age: '',
+                expire:date1
             };
+        
+            
+        let myObj_deserialzied = JSON.parse(localStorage.getItem("name"))
+           
+        if (myObj_deserialzied){
+            const res = new Date().getTime() > myObj_deserialzied.expire;
+            console.log(res)
+            if (!res) {
+                localStorage.removeItem("name");
+                console.log('expired')
+            }else{
+                console.log('it still valid')
+            }
+        }else{
+            console.log('no items')
+        }
         
 
 
-        let myObj_deserialzied = JSON.parse(localStorage.getItem("name"))
-            
-
             const user = document.getElementById('spanID')
-
-           
+          
 
             if(myObj_deserialzied?.name) {
                 user.innerHTML = myObj_deserialzied.name
