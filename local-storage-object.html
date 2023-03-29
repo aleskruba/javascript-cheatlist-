@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <H1>Hi <span id="spanID"> </span></H1>    
+    
+    <div id="loginID">
+        <h5>log in here</h5>
+        
+        <form id="formID">
+            <input type="text" placeholder="enter your name" id="name" >
+            <input type="text" placeholder="enter your age" id="age" >
+
+            <input type="submit" value="save">
+        </form>
+        <h4>You have to log in to see the main page</h4>
+    </div>
+    
+    <div id="mainID" style="display: none;">
+
+       <h3>This can see only logged users</h3> 
+
+        <button onclick="logoutfunc()">logout</button>
+
+    </div>
+
+    <script>
+        
+        const loginID = document.getElementById('loginID')
+        const mainID = document.getElementById('mainID')
+
+        let name = localStorage.getItem("name")
+        let age = localStorage.getItem("age")
+
+                  
+        let newObj = {
+                name: '',
+                age: ''
+            };
+
+        let myObj_deserialzied = JSON.parse(localStorage.getItem("name"))
+            
+        const user = document.getElementById('spanID')
+
+            user.innerHTML = ''
+
+            if(myObj_deserialzied.name) {
+                user.innerHTML = myObj_deserialzied.name
+                loginID.style ="display: none;"
+                mainID.style = "display: block"
+            }else if(!myObj_deserialzied.name) {
+                loginID.style ="display: block;"
+                 mainID.style = "display: none"
+                 user.innerHTML = 'newuser'
+            }
+
+            document.querySelector('#formID').addEventListener('submit', e=>  {
+            e.preventDefault()
+           const name = document.querySelector('#name')
+           const age = document.querySelector('#age')
+                      
+             newObj.name = name.value,
+             newObj.age = age.value
+           
+
+           if (name == '' || age == '') {
+            alert('cannot be empty')
+           }else {
+           user.innerHTML = newObj.name 
+           localStorage.setItem('name',JSON.stringify(newObj))
+           loginID.style ="display: none;"
+           mainID.style = "display: block"
+            }
+            })
+    
+            function logoutfunc(){
+                const name = document.querySelector('#name')
+                const age = document.querySelector('#age')
+                
+                name.value = ''
+                age.value = ''
+
+                localStorage.removeItem("name");
+                loginID.style ="display: block;"
+                 mainID.style = "display: none"
+                 user.innerHTML = 'newuser'
+              
+            }
+            
+            
+    
+    </script>
+
+
+</body>
+</html>
