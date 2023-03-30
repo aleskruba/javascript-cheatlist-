@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+
+<body>
+    <h1>Records</h1>
+	<form id="recordForm">
+		<label for="id">ID:</label>
+		<input type="text" id="id" name="id"><br>
+
+		<label for="name">Name:</label>
+		<input type="text" id="name" name="name"><br>
+
+		<label for="age">Age:</label>
+		<input type="text" id="age" name="age"><br>
+        
+        <div id="buttons"> 
+		    <input type="submit" value="Add Record" id="submitButton">
+	    </div>
+    
+    </form>
+	<ul id="recordList"></ul>
+
+<script> 
+    
+    var selectedRow = null;
+    let records = [];
+    displayRecords() 
+
+    const submitButton = document.querySelector('#submitButton')
+
+    function clearFields(){
+    document.querySelector('#id').value = "";
+    document.querySelector('#name').value = "";
+    document.querySelector('#age').value = "";
+}
+
+//add record
+    document.querySelector('#recordForm').addEventListener('submit', e=>  {
+        e.preventDefault()
+        
+        const buttons = document.querySelector('#buttons')
+        if (buttons.children[1]) {
+        buttons.removeChild(buttons.children[1])
+        }
+        const id = document.getElementById("id").value;
+        const name = document.getElementById("name").value;
+        const age = document.getElementById("age").value;
+        const record = { id, name, age };
+        if (id == "" || name == "" || age == "") {
+            alert("please fill in all fields","danger")
+        }
+        else {
+        
+            if (selectedRow==null) {
+
+            records.push(record);
+            localStorage.setItem("records", JSON.stringify(records));
+            selectedRow = null
+            displayRecords() 
+            clearFields()    
+
+        } else {
+                    selectedRow.id = record.id;
+                    selectedRow.name = record.name;
+                    selectedRow.age = record.age;
+                    selectedRow = null
+                    displayRecords() 
+                    submitButton.value = 'Add record'
+                }
+
+                clearFields()
+
+        
+        }
+       
+    
+    })
+    
+let isTrue = true
+
+    //display record          
+function displayRecords() {
+	const recordList = document.getElementById("recordList");
+	recordList.innerHTML = "";
+	records.forEach((record, index) => {
+		const li = document.createElement("li");
+		li.innerText = `${record.name}, ${record.age}`;
+        if (isTrue) {
+        const editButton = document.createElement("button");
+		editButton.innerText = "Edit";
+		editButton.addEventListener("click", () => editRecord(index));
+		li.appendChild(editButton);
+		const deleteButton = document.createElement("button");
+		deleteButton.innerText = "Delete";
+		deleteButton.addEventListener("click", () => deleteRecord(index));
+		li.appendChild(deleteButton);
+		recordList.appendChild(li);
+
+        }
+	});
+}
+
+
+
+function Editbuttons(){
+        const buttons = document.querySelector('#buttons')
+        submitButton.value = 'Edit record'
+        const cancelButton = document.createElement('button')
+        cancelButton.classList.add("buttonClass");
+        const spanButton = document.createElement('span')
+        spanButton.textContent = 'cancel'
+        cancelButton.appendChild(spanButton)
+        buttons.append(cancelButton)
+        cancelButton.addEventListener('click', ()=> {
+                    buttons.removeChild(buttons.children[1])
+                    clearFields()
+                    displayRecords();
+                    selectedRow=null
+                    submitButton.value = 'Add record'
+
+    })    
+        
+    }
+
+
+
+
+function editRecord(index) {
+    Editbuttons()
+    isTrue = false
+    const record = records[index];
+    selectedRow = record
+    console.log(selectedRow.id)
+	document.getElementById("id").value = record.id;
+	document.getElementById("name").value = record.name;
+	document.getElementById("age").value = record.age;
+	console.log(record)    
+	localStorage.setItem("records", JSON.stringify(records));
+	displayRecords();
+    submitButton.value = 'Edit record'
+
+    isTrue = true
+    
+    }
+
+
+
+function deleteRecord(index) {
+	records.splice(index, 1);
+	localStorage.setItem("records", JSON.stringify(records));
+	displayRecords();
+}
+
+window.onload = () => {
+	const storedRecords = JSON.parse(localStorage.getItem("records"));
+	if (storedRecords) {
+		records = storedRecords;
+		displayRecords();
+	}
+}
+
+    </script>
+   
+</body>
+</html>
