@@ -188,6 +188,42 @@ if (x < obj.length) {
 
 
 }else {
+    const timer = document.querySelector('.timer')
+    timer.style = 'display:none'
+
+
+    const endDiv = document.createElement('div')
+    endDiv.className = 'endDiv'
+    const lastText = document.querySelector('.lastText'
+    )
+    lastText.style = 'display:block'
+    playDiv.appendChild(endDiv)
+    console.log(wrongAnswers)
+    wrongAnswers.forEach(i=>{
+
+        const correctedQuestion = document.createElement('div')
+        correctedQuestion.className = 'correctedQuestion'        
+        correctedQuestion.innerHTML = `${i.q} <br>  ${i.corr} <hr> <br>`
+        endDiv.appendChild(correctedQuestion)
+
+      
+      
+    })
+
+    const rightDiv = document.querySelector('.rightDiv')
+    const point = document.createElement('div')
+    point.classList = 'points'
+    point.innerHTML = `${points} answers correct out of ${obj.length}`    
+    rightDiv.appendChild(point)  
+}
+
+
+}
+
+
+
+
+}else {
 
 
     const endDiv = document.createElement('div')
