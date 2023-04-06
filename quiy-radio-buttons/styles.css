@@ -1,0 +1,200 @@
+*{
+    margin:0;
+    padding:0;
+    font-family: 'Poppins', sans-serif;
+
+}
+
+body{
+    height: 100vh;
+   
+}
+.container{
+        margin-top: 20px;
+        
+ }
+
+
+
+.main{
+    margin-left: 15px;
+    margin-top: 120px;
+}
+
+.loginText{
+    margin-top:15%;
+}
+.loginTextH5{
+    margin-top:20px;
+    font-size: 30px;
+    font-weight: 800;
+    color: white;
+}
+
+.loginTextH4{
+    font-size: 20px;
+    font-weight: 800;
+    color: white;
+    font-style: italic;
+}
+
+.inputForm{
+
+    display: flex;
+    align-items: right;
+    flex-direction: column;
+
+}
+
+input{
+    width: 060%;
+    padding: 12px 40px;
+    margin: 80px 10;
+    box-sizing: border-box;
+
+  
+}
+
+.input2{
+ margin-top: 5px;
+ 
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.input3{
+    margin-top: 15px;
+    background-color: #2F4F4F;
+    color: white;
+}
+
+.htext{
+    margin-top: 20px;
+}
+
+
+
+
+#btnLogout{
+  
+
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+    margin-left: 60%;
+}
+
+.welcome {
+    
+    font-size: 72px;
+    color: white;
+    animation: falling-letters 1s ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+
+@keyframes falling-letters {
+    from {
+        transform: translateY(-20%);
+    }
+    to {
+        transform: translateY(60%);
+    }
+}
+
+
+@media screen and (max-width: 767px) {
+	/* styles for devices with screen width less than or equal to 767px */
+	
+	header {
+		padding: 5px;
+	}
+
+	main {
+		padding: 10px;
+	}
+
+
+
+	button {
+		padding: 8px 16px;
+		font-size: 16px;
+	}
+}
+
+.quizDiv{
+ 
+  
+}
+
+.options{
+    
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 15px;
+    flex-direction: column;
+    color: white;
+}
+
+.option{
+    margin-left: -200px;
+    display: flex;
+    flex-direction: row;
+    min-width: 900px;
+
+}
+
+    input[type="radio"] {
+        margin-right: -250px;
+      }  
+
+.code{
+    color: white;
+      }
+
+.codeQ{
+    color: white;
+    font-size: 17px;
+}
+
+.QuestionsNumbers{
+    color: white;
+    font-size: large;
+}
+
+
+.example{
+    color: white;
+    font-size: 18px;
+    animation: blinker 1s step-start infinite
+}
+
+@keyframes blinker {
+    50% {
+      opacity: 70%;
+    }
+  }
+
+.correctAnswer{
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.correctAnswerDiv{
+    background-color: green;
+    width: 80%;
+}
+
+#score{
+    background-color: green;
+    padding: 10px;
+    color: white;
+    font-size: 25px;
+    border-bottom: 1px solid white;
+
+}
