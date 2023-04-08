@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+      <button onclick="myfunc()">save me </button>
+      
+<script>
+
+function myfunc() {
+
+
+    function convertSvgToTransparentPng(svgString, filename, callback) {
+  var img = new Image();
+  img.onload = function() {
+    var canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    var ctx = canvas.getContext('2d');
+    ctx.globalCompositeOperation = 'destination-over'; // Set to draw loaded image below any existing content
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear any existing content
+    ctx.drawImage(img, 0, 0, img.width, img.height);
+    var pngData = canvas.toDataURL('image/png');
+    var a = document.createElement('a');
+    a.download = filename;
+    a.href = pngData;
+    a.click();
+    callback();
+  };
+  img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgString)));
+}
+
+var svgString = '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">' +
+                '<rect x="0" y="0" width="200" height="200" fill="none"/>' +
+                '<rect x="30" y="30" width="140" height="140" rx="20" ry="20" fill="#3B5998"/>' +
+                '<text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-family="Montserrat" font-size="120" font-weight="600" width="80">L</text>' +
+                '<text x="80%" y="75%" dominant-baseline="middle" text-anchor="middle">' +
+                  '<tspan fill="#fff" letter-spacing="2px" font-family="Montserrat" font-size="28" x="50%" text-anchor="middle" width="140">engua</tspan>' +
+                '</text>' +
+                '<text fill="#fff" x="50%" y="22%" dominant-baseline="middle" text-anchor="middle" font-family="Montserrat" font-size="10" font-weight="900" font-style="italic">© DOKRAM s.r.o.</text>' +
+              '</svg>';
+
+              convertSvgToTransparentPng(svgString, 'file.png', function() {
+  console.log('File saved!');
+});
+
+
+}
+</script>     
+      
+</body>
+</html>
