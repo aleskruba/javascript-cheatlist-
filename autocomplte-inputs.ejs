@@ -1,0 +1,171 @@
+<%- include('partials/header'); -%>
+
+<form action="/signup" class="loginForm" autocomplete="off">
+  <h2 class="Loginh2">Update profile</h2>
+  <label for="email">Email</label>
+  <input type="text" name="email" required />
+
+  <label for="firstname">First Name</label>
+  <input type="text" name="firstname" required />
+
+  <label for="lastname">Last Name</label>
+  <input type="text" name="lastname" required />
+
+  <label for="country-input">Country:</label>
+  <input type="text"  id="input" name="country">
+  <ul class="list">
+
+  </ul>
+
+  <label for="phone">Phone</label>
+  <input type="text" name="phone" id="phoneInput" value="+"  />
+  <ul class="phonelist">
+
+  </ul>
+
+  <div class="updateSelectDiv">
+    <div>
+          <label for="teacher">Also a teacher</label>
+   </div>
+    <div class="updateSelecetDivOptions">
+        <select  class='selectTecher' name="teacher" id="">
+            <option class="optionTeacher">YES</option>
+            <option>NO</option>
+        </select>
+</div>   
+</div>
+
+  <input type="submit" name="" class="loginBtn" id="" value="Update" style="margin-top: 60px;">  
+ 
+</form>
+
+<%- include('partials/footer'); -%>
+
+
+<script>
+
+
+  const form = document.querySelector('form');
+/*   const emailError = document.querySelector('.email.error');
+  const passwordError = document.querySelector('.password.error');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    // reset errors
+    emailError.textContent = '';
+    passwordError.textContent = '';
+    // get values
+    const email = form.email.value;
+    const password = form.password.value;
+    try {
+      const res = await fetch('/signup', { 
+        method: 'POST', 
+        body: JSON.stringify({ email, password }),
+        headers: {'Content-Type': 'application/json'}
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.errors) {
+        emailError.textContent = data.errors.email;
+        passwordError.textContent = data.errors.password;
+      }
+      if (data.user) {
+        location.assign('/');
+      }
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }); */
+
+  fetch('countries.json')
+  .then(response => response.json())
+  .then(data => {
+    const arr = data.countries;
+    const input = document.getElementById("input");
+    const phoneInput = document.getElementById("phoneInput");
+    
+    function displayNames(value) {
+      input.value = value;
+      removeElements();
+    }
+
+    function displayPhones(value) {
+      phoneInput.value = value;
+      removePhoneElements();
+    }
+
+
+    input.addEventListener("keyup", e => {
+      removeElements();
+
+      for (let i of arr) {
+        if (i.name.toLowerCase().startsWith(input.value.toLowerCase()) && input.value !== "") {
+          const listItem = document.createElement("li");
+          listItem.classList.add("list-items");
+          listItem.style.cursor = "pointer";
+          listItem.addEventListener("click", () => displayNames(i.name));
+          const word = "<b>" + i.name.substr(0, input.value.length) + "</b>" + i.name.substr(input.value.length);
+          listItem.innerHTML = word;
+          document.querySelector(".list").appendChild(listItem);
+        }
+      }
+    });
+
+    phoneInput.addEventListener("keyup", e => {
+      removePhoneElements();
+      
+      for (let i of arr) {
+
+        if (i.dial_code.toLowerCase().startsWith(phoneInput.value.toLowerCase()) && phoneInput.value !== "") {
+          const listItemPhone = document.createElement("li");
+          listItemPhone.classList.add("list-items-phones");
+          listItemPhone.style.cursor = "pointer";
+          listItemPhone.addEventListener("click", () => displayPhones(i.dial_code));
+          const word = "<b>" + i.dial_code.substr(0, phoneInput.value.length) + "</b>" + i.dial_code.substr(phoneInput.value.length);
+          listItemPhone.innerHTML = word;
+          document.querySelector(".phonelist").appendChild(listItemPhone);
+        }
+      }
+    });
+
+    function removeElements() {
+      const items = document.querySelectorAll('.list-items');
+      items.forEach(item => item.remove());
+    }
+
+    function removePhoneElements() {
+      const phoneInput = document.querySelectorAll('.list-items-phones');
+      phoneInput.forEach(item => item.remove());
+    }
+
+  })
+  .catch(error => console.error(error));
+
+  // Get a reference to the form element
+
+
+// Add a submit event listener to the form
+form.addEventListener('submit', function(event) {
+  // Prevent the form from actually submitting and refreshing the page
+  event.preventDefault();
+
+  // Get the values from the form
+  const email = form.email.value;
+  const firstName = form.firstname.value;
+  const lastName = form.lastname.value;
+  const country = form.country.value;
+  const phone = form.phone.value;
+  const isTeacher = form.teacher.value;
+
+  // Log the values to the console
+  console.log(`Email: ${email}`);
+  console.log(`First Name: ${firstName}`);
+  console.log(`Last Name: ${lastName}`);
+  console.log(`Country: ${country}`);
+  console.log(`Phone: ${phone}`);
+  console.log(`Also a Teacher: ${isTeacher}`);
+});
+
+
+</script>
+
