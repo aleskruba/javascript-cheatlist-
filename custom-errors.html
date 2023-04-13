@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1>Click on this button</h1>
+    <button id="btn">BUTTON</button>
+
+</body>
+
+<script>
+const  button  = document.getElementById('btn')
+
+
+const MyError = function (msg) {
+    return Object.create(Error.prototype,{
+        name:{value:'alesError',enumerable:true},
+        message: {value:msg, enumerable:true},
+        bob: {value:'hello',enumerable:true}
+    })
+}
+
+const NetWorkError = class extends Error {
+    constructor(response){
+        super(response.statusText);
+        
+        this.name = 'NetworkError'
+        this.message = response.statusText
+        this.code = response.statusText
+        this.response = response
+    }
+}
+
+button.addEventListener('click', (ev)=>{
+
+    let err = new Error('orginal Error message')
+let errAles = new MyError('Ales message happend')
+
+try{
+        throw err;
+    }catch(e) 
+        {console.log({e})}
+
+
+
+    try{
+        throw errAles;
+    }catch(e) 
+        {console.log({e})}
+
+
+    let resp = new Response(null,{
+        status:400,
+        statusText: "This is a text from Response",
+        headers: { 'x-my-header':'failure to curfew'}
+        })
+
+        Promise.resolve(resp).then(resp=>{
+            if(!resp.ok) throw new NetWorkError(resp)
+            console.log('response was too good')
+        }).catch(err=> { console.log({err})})
+
+})
+
+
+</script>
+</html>
