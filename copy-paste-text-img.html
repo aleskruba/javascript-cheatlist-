@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <article id="content-copy">Copy this shit</article>
+    <button id="btn-copy">Copy</button>
+    <button id="btn-paste">Paste</button>
+
+    <article id="content-paste">
+
+    </article>
+
+</body>
+
+<script>
+
+    const copyButton = document.getElementById('btn-copy')
+    const pasteButton = document.getElementById('btn-paste')
+    const pasteArticle = document.getElementById('content-paste')
+
+    pasteButton.addEventListener('click', async event => {
+        pasteArticle.textContent =''
+
+    try {
+        const data  = await navigator.clipboard.read()
+        console.log(data[0].types[1])
+        if (data[0].types[1]!="text/html") {
+        const clipboardConent = data[0]
+
+        const imgBlob = await clipboardConent.getType('image/png')
+         const blobUrl = window.URL.createObjectURL(imgBlob)
+
+            const img = document.createElement('img')
+
+            img.src = blobUrl
+            pasteArticle.appendChild(img)
+        } else {console.log('no image ')}
+    }catch(err) {
+        console.log(err)
+        const text = await navigator.clipboard.readText();
+        pasteArticle.textContent = text
+    }
+    
+    
+    })
+
+    copyButton.addEventListener('click', async (event)=> {
+        const content = document.getElementById('content-copy').textContent;
+        await  navigator.clipboard.writeText(content);
+
+        const copied = navigator.clipboard.readText();
+        console.log(copied);
+
+
+
+    })
+
+
+</script>
+</html>
