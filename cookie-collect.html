@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <a href="test.html" onclick="setLastVisitedPage(event)">bicycles</a>
+    <a href="storage.html" onclick="setLastVisitedPage(event)">cars</a>
+
+    <script>
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') {
+                    c = c.substring(1, c.length);
+                }
+                if (c.indexOf(nameEQ) === 0) {
+                    return c.substring(nameEQ.length, c.length);
+                }
+            }
+            return null;
+        }
+
+        async function getLocation() {
+            const response = await fetch('https://ipapi.co/json/');
+            const data = await response.json();
+            return { ip: data.ip, country: data.country };
+        }
+
+        async function setLastVisitedPage(event) {
+            event.preventDefault();
+            // Get the href value of the clicked link
+            const currentPage = event.target.href;
+
+            // Check if the 'visitedPages' cookie exists and parse it into an array
+            let visitedPages = [];
+            if (document.cookie.split(';').some((item) => item.trim().startsWith('visitedPages='))) {
+                visitedPages = JSON.parse(getCookie('visitedPages'));
+            }
+
+            // Get the location data and add it to the object
+            const locationData = await getLocation();
+            const visitedPage = {
+                page: currentPage,
+                ip: locationData.ip,
+                country: locationData.country
+            };
+
+            // Add the current page to the array and set the 'visitedPages' cookie again
+            visitedPages.push(visitedPage);
+            setCookie('visitedPages', JSON.stringify(visitedPages), 365);
+        }
+    </script>
+</body>
+</html>
