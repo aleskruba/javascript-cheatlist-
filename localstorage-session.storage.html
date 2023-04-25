@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>Teachers visited during thise session</h1>
+    <div class="sessionStorage" >
+
+
+    </div>
+
+    <h1>Teachers visited - saved in localstorage</h1>
+    <div class="localStorage" >
+
+
+    </div>
+
+
+    <div class="teachers">
+        <h1>ALL TEACHERS</h1>
+    </div>
+
+
+<script>
+    const sessionStorage = document.querySelector('.sessionStorage')
+    const teachersDIV = document.querySelector('.teachers')
+    const localStorageDIV = document.querySelector('.localStorage')
+
+    const teachers =  ['Ales','Adam','Pepa','Oleg','John','Emil','Eduard']
+
+ // Retrieve the existing favoriteteachers array from sessionStorage
+    let favoriteteachers = JSON.parse(sessionStorage.getItem('favoriteteachersSession'))
+
+    if (!favoriteteachers) {
+    // If the favoriteteachers array doesn't exist in sessionStorage yet, create it
+    favoriteteachers = []
+    sessionStorage.setItem('favoriteteachersSession', JSON.stringify(favoriteteachers))
+    }
+    
+    
+    let favoriteteachersLocal = JSON.parse(localStorage.getItem('favoriteteachersLocal'))
+    
+
+    const now = new Date().getTime(); // get the current timestamp in milliseconds
+    const expirationDate = now + (30 * 24 * 60 * 60 * 1000); 
+
+    if (!favoriteteachersLocal) {
+    favoriteteachersLocal = []
+    localStorage.setItem('favoriteteachersLocal', JSON.stringify(favoriteteachersLocal))
+    } else { 
+        if (now > item.expiration) {
+        localStorage.removeItem("favoriteteachersLocal");
+    }
+    }
+
+    for (let name of favoriteteachers) {
+        const newDiv = document.createElement('div')
+        const newH2 =  document.createElement('h2') 
+        newH2.innerHTML = `you clicked recently on  ${name}`
+        newDiv.appendChild(newH2)
+
+        sessionStorage.appendChild(newDiv)
+    }
+
+    for (let name of favoriteteachersLocal) {
+        const localStorageDIV = document.createElement('div')
+        const newH2 =  document.createElement('h2') 
+        newH2.innerHTML = `you clicked recently on  ${name}`
+        localStorageDIV.appendChild(newH2)
+
+        sessionStorage.appendChild(localStorageDIV)
+    }
+
+
+    for (let teacher of teachers){
+        const newDiv = document.createElement('div')
+        const newH2 =  document.createElement('h2') 
+        newH2.innerHTML = `${teacher}`
+        newDiv.setAttribute('onclick',`addMeToFavorites('${teacher}')`)
+        newDiv.appendChild(newH2)
+        teachersDIV.appendChild(newDiv)
+        
+    }
+
+    function addMeToFavorites(teacher) {
+        if (!favoriteteachersLocal.includes(teacher)) {
+        console.log(teacher)
+        favoriteteachers.push(teacher)
+        sessionStorage.setItem('favoriteteachersSession', JSON.stringify(favoriteteachers))
+    }
+        if (!favoriteteachersLocal.includes(teacher)) {
+        favoriteteachersLocal.push(teacher)
+        localStorage.setItem('favoriteteachersLocal', JSON.stringify(favoriteteachersLocal))
+    } }
+
+</script>
+</body>
+
+</html>
