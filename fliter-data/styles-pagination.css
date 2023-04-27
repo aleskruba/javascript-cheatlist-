@@ -1,0 +1,48 @@
+.menu{
+    display: flex;
+}
+
+
+.ulList{
+    display: flex;
+    flex-direction: row;
+    padding: 50px;
+    gap: 50px;
+    list-style: none;
+}
+
+.priceInputs{
+    display: flex;
+    flex-direction: column;
+}
+
+.results{
+    border-top: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+.results ul:nth-child(even) {
+    background-color: lightgray;
+  }
+
+  .pagination {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    background-color: white;
+    border: 1px solid black;
+    padding: 5px 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  
+  .pagination button:hover {
+    background-color: black;
+    color: white;
+  }
+  
