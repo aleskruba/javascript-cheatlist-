@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <div class="container">
+        <div class="menu">
+          <ul class="ulList">
+            <li><input type="text" placeholder="enter language"></li>
+            <li>Teacher Type
+              <select name="languages" id="" class="selectInput">
+                <option value="">Both</option>
+                <option value="Teacher">Teacher</option>
+                <option value="Tutor">Tutor</option>
+              </select>
+            </li>
+            <li>
+              <div class="priceInputs">
+                <input type="text" placeholder="min price">
+                <input type="text" placeholder="max price">
+              </div>
+            </li>
+          </ul>
+        </div>
+      
+        <div class="results">
+          <div class="result">
+          </div>
+        </div>
+      </div>
+      
+      <script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const results = document.querySelector('.results')
+  const languageInput = document.querySelector('input[placeholder="enter language"]')
+  const selectInput = document.querySelector('.selectInput')
+  const minPriceInput = document.querySelector('input[placeholder="min price"]')
+  const maxPriceInput = document.querySelector('input[placeholder="max price"]')
+
+
+  fetch('db.json')
+    .then(response => response.json())
+    .then(data => {
+      const teachers = data.teachers
+
+      const updateResults = () => {
+        const filteredTeachers = teachers.filter((teacher) => {         
+          const language = teacher.language.toLowerCase()
+          const type = teacher.type.toLowerCase()
+          const minPrice = parseInt(minPriceInput.value) || 0
+          const maxPrice = parseInt(maxPriceInput.value) || Infinity
+
+          return language.includes(languageInput.value.toLowerCase()) &&
+            teacher.price >= minPrice && teacher.price <= maxPrice &&
+            type.includes(selectInput.value.toLowerCase())
+        })
+
+        results.innerHTML = ''
+        filteredTeachers.forEach((teacher) => {
+          const ul = document.createElement('ul')
+          
+          let html = `
+            <li>${teacher.name}</li>
+            <li>${teacher.language}</li>
+            <li>${teacher.price}</li>
+            <li>${teacher.type}</li>
+          `
+          ul.innerHTML = html
+          results.appendChild(ul)
+        })
+      }
+
+      languageInput.addEventListener('input', updateResults)
+      minPriceInput.addEventListener('input', updateResults)
+      maxPriceInput.addEventListener('input', updateResults)
+      selectInput.addEventListener('change', updateResults)
+
+      updateResults()
+    })
+})
+      </script>
+      
+      
+</body>
+</html>
