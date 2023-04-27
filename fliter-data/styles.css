@@ -1,0 +1,27 @@
+.menu{
+    display: flex;
+}
+
+
+.ulList{
+    display: flex;
+    flex-direction: row;
+    padding: 50px;
+    gap: 50px;
+    list-style: none;
+}
+
+.priceInputs{
+    display: flex;
+    flex-direction: column;
+}
+
+.results{
+    border-top: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+.results ul:nth-child(even) {
+    background-color: lightgray;
+  }
