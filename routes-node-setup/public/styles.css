@@ -1,0 +1,70 @@
+.main{
+display: flex;
+align-items: start;
+flex-direction: column;
+position: relative;
+margin-left: 50px;
+}
+
+.top{
+display: flex;
+
+}
+
+.leftSide{
+margin-left: 20px;
+margin-top: 50px;
+width: 800px;
+height: 200px;
+display: flex;
+flex:1;
+flex-direction: column;
+background-color: aqua;
+}
+
+.rightSide{
+
+height: auto;
+display: flex;
+flex: 1;
+flex-direction: column;
+margin-left: 100px;
+margin-right: 100px;
+}
+
+.rightContainer{
+    position: fixed;
+    margin-left: 100px;
+    top: 150px;
+    right: 120px;
+    width: 400px;
+    height: 400px;
+    background-color: white;
+    border: 1px solid black;
+
+}
+
+.playerDIV{
+margin-top: 50px;
+width: 400px;
+height: 200px;
+background-color: rgb(38, 122, 122);
+}
+
+.calendar{
+margin-top: 50px;
+    background-color: brown;
+width: 400px;
+height: 200px;
+
+}
+
+.bottom{
+    margin-left: 20px;
+    margin-top: 50px;
+    display: flex;
+    background-color: blue;
+    width: 800px;
+
+}
+
