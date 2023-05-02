@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Document</title>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Language</h1>
+
+    <input type="text" value="" class="languageInput">
+    <button onClick="addItem()">save</button>
+
+
+    <div class="items">
+      <ul class="itemsUl">
+
+      </ul>
+    </div>
+  </div>
+
+  <script>
+
+    const languageInput = document.querySelector('.languageInput')
+    const itemsUl = document.querySelector(".itemsUl")
+    const arr = []
+
+    async function fetchData() {
+      const response = await fetch('data.json')
+      const data = await response.json()
+      data.languages.forEach(e => {
+        addItemToList(e.language)
+      })
+      if (arr.length === 2) {
+        languageInput.disabled = true
+      }
+      return data
+    }
+
+    fetchData()
+
+    function addItem() {
+      if (arr.length >= 2) {
+        languageInput.disabled = true
+        return
+      }
+
+      const newItem = languageInput.value
+      if (newItem) {
+        addItemToList(newItem)
+        if (arr.length === 2) {
+          languageInput.disabled = true
+        }
+        languageInput.value = ""
+      }
+    }
+
+    function addItemToList(item) {
+      arr.push(item)
+      updateList()
+    }
+
+    function removeItem(index) {
+      arr.splice(index, 1)
+      updateList()
+      languageInput.disabled = false
+    }
+
+    function updateList() {
+      itemsUl.innerHTML = ""
+      arr.forEach((element, index) => {
+        const itemLi = document.createElement('li')
+        itemLi.classList.add('itemLi')
+        itemLi.innerHTML = element
+        const delButton = document.createElement('div')
+        delButton.innerHTML = 'X'
+        delButton.onclick = () => removeItem(index)
+        itemLi.appendChild(delButton)
+        itemsUl.appendChild(itemLi)
+      })
+    }
+
+  </script>
+
+</body>
+</html>
