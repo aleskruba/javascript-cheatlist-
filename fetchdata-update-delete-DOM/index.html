@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Document</title>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Language</h1>
+
+    <input type="text" value="" class="languageInput">
+    <button onclick="myFunc()">save</button>
+
+
+    <div class="items">
+      <ul class="itemsUl">
+
+      </ul>
+    </div>
+  </div>
+
+  <script>
+
+    const languageInput = document.querySelector('.languageInput')
+    const itemsUl = document.querySelector(".itemsUl")
+    const arr = []
+
+    async function fetchData() {
+      const response = await fetch('data.json')
+      const data = await response.json()
+      data.languages.forEach(e => {
+        arr.push(e.language)
+        
+      })
+      if (arr.length === 2) {
+        // Disable the input field if the array now has 2 elements
+        languageInput.disabled = true
+      }
+
+      arr.forEach((element, index) => {
+        const itemLi = document.createElement('li')
+        itemLi.classList.add('itemLi')
+        itemLi.innerHTML = element
+        const delButton = document.createElement('div')
+        delButton.innerHTML = 'X'
+        // Add event listener to delete button
+        delButton.addEventListener('click', () => {
+          arr.splice(index, 1) // Remove the corresponding language from the array
+          updateList() // Update the list to reflect the changes
+          languageInput.disabled = false // Enable the input field if it was disabled
+        })
+        itemLi.appendChild(delButton)
+        itemsUl.appendChild(itemLi)
+      })
+      return data // return the data object
+    }
+
+    // Usage:
+    fetchData()
+
+
+    function myFunc() {
+      if (arr.length >= 2) {
+        // Disable the input field if the array already has 2 elements
+        languageInput.disabled = true
+        return
+      }
+
+      arr.push(languageInput.value)
+      updateList()
+
+      if (arr.length === 2) {
+        // Disable the input field if the array now has 2 elements
+        languageInput.disabled = true
+      }
+
+      languageInput.value = ""
+    }
+
+    function updateList() {
+      // Clear the current contents of the ul element
+      itemsUl.innerHTML = ""
+
+      // Add new li elements for each item in the array
+      arr.forEach((element, index) => {
+        const itemLi = document.createElement('li')
+        itemLi.classList.add('itemLi')
+        itemLi.innerHTML = element
+        const delButton = document.createElement('div')
+        delButton.innerHTML = 'X'
+        // Add event listener to delete button
+        delButton.addEventListener('click', () => {
+          arr.splice(index, 1) // Remove the corresponding language from the array
+          updateList() // Update the list to reflect the changes
+          languageInput.disabled = false // Enable the input field if it was disabled
+        })
+        itemLi.appendChild(delButton)
+        itemsUl.appendChild(itemLi)
+      })
+    }
+
+  </script>
+
+</body>
+</html>
