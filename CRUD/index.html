@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+.newDiv {
+  background-color: rgba(243, 235, 235, 0.5);
+  width: 100px;
+  position: relative;
+}
+
+
+
+.newDivAbsolute {
+  background-color: red;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  opacity: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deleteButton{
+    background-color: blueviolet;
+    color: black;
+    right: 0;
+    top: 0;
+
+}
+.h2{
+    color: aqua;
+    font-size: 35px;
+}
+
+
+
+
+</style>
+<body>
+    <form action="" class="form">
+      <input type="text" id="name" name="name" placeholder="name">
+      <input type="text" id="email" name="email" placeholder="email">
+      <input type="text" id="age" name="age" placeholder="age">
+      <input type="submit">
+    </form>
+  
+    <div class="data">
+  
+    </div>
+  
+    <script>
+      const form = document.querySelector('form');
+      const arrayOfObjects = [];
+      const data = document.querySelector('.data');
+      let selectedIndex = null;
+  
+      function renderData() {
+        // Clear the previous list items before adding new ones
+        data.innerHTML = '';
+  
+        arrayOfObjects.forEach((element, index) => {
+          const newDiv = document.createElement('div')
+          newDiv.classList.add('newDiv')
+          const newDivAbsolute = document.createElement('div')
+          newDivAbsolute.classList.add('newDivAbsolute')
+  
+          const h2 = document.createElement('h2')
+          h2.classList.add('h2')
+          h2.innerHTML = index
+
+          const deleteButton = document.createElement('div')
+          deleteButton.classList.add('deleteButton')
+          deleteButton.innerHTML = 'X'
+
+          newDiv.appendChild(deleteButton)
+          newDivAbsolute.appendChild(h2)
+  
+          newDiv.appendChild(newDivAbsolute)
+          const newUL = document.createElement('ul')
+          newUL.classList.add('ulList')
+          newUL.innerHTML = `<li> ${element.name}</li>
+                              <li> ${element.email} </li>
+                              <li> ${element.age} </li>`
+          newDiv.appendChild(newUL)
+          data.appendChild(newDiv)
+     
+     
+          deleteButton.addEventListener('click', () => {
+                    arrayOfObjects.splice(index, 1);
+                    renderData();
+                    newDiv.remove();
+                    });
+
+
+
+          newDivAbsolute.addEventListener('click', () => {
+            selectedIndex = index;
+            document.getElementById('name').value = element.name;
+            document.getElementById('email').value = element.email;
+            document.getElementById('age').value = element.age;
+          });
+  
+        });
+      }
+  
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+  
+        // Get form data
+        const formData = new FormData(event.target);
+        const formDataObject = {};
+        for (let [name, value] of formData) {
+          formDataObject[name] = value;
+        }
+  
+        // Update arrayOfObjects with new form data if selectedIndex is not null
+        if (selectedIndex !== null) {
+          arrayOfObjects[selectedIndex] = formDataObject;
+          selectedIndex = null;
+        } else {
+          arrayOfObjects.push(formDataObject);
+        }
+  
+        // Render the data and clear the form
+        renderData();
+        event.target.reset();
+      });
+  
+      // Call renderData() once to display initial data
+      renderData();
+    </script>
+  </body>
+  
+</html>
