@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="main">
+
+
+
+</div>    
+<button onclick="saveArray()" class="buttonSave">save</button>
+<button onclick="updateArray()">update</button>
+
+<div class="cancelDiv">
+
+</div>
+
+<script>
+
+const main = document.querySelector('.main')
+
+let arr = []
+
+for (let i = 0; i < 10; i++){
+    arr.push(i)
+}
+
+let temporaryArry = []
+
+
+const buttonSave = document.querySelector('.buttonSave')
+
+
+fetch('http://localhost:3000/divs')
+    .then(response => response.json())
+    .then(data => { 
+        for (let x in data[0].dates ){
+               temporaryArry.push(data[0].dates[x])
+        }
+        if (temporaryArry) {
+                 buttonSave.style = "display:none"
+        }
+    
+    console.log(temporaryArry)
+
+    arr.map((element,index) => {
+        const newDiv = document.createElement('div')
+        newDiv.classList.add('newDiv')
+        newDiv.textContent = element
+        main.appendChild(newDiv)
+        temporaryArry.forEach(number=>{
+            if (number==element){
+                newDiv.classList.add('selected')
+            }
+        
+        })
+        
+    
+        newDiv.addEventListener('click', () => {
+
+
+
+            if (temporaryArry.includes(element)){
+                newDiv.classList.add('preselectedToDelete');   
+                const index = temporaryArry.indexOf(element);
+                temporaryArry.splice(index, 1);
+                console.log(temporaryArry)
+            } else {
+                    temporaryArry.push(element)
+                    newDiv.classList.add('selected')
+                    console.log(temporaryArry)
+                  }
+            });
+        }); 
+    }
+    
+    )
+    .catch(error => console.error(error));
+
+.main{
+    display: flex;
+}
+
+.newDiv {
+    background-color: rgb(188, 188, 224);
+    margin: 10px;
+    width: 80px;
+    height: 80px;
+}
+
+.selected {
+    background-color: blue;
+}
+
+
+.preselectedToDelete {
+    background-color: rgb(194, 219, 105);
+}
+
+
