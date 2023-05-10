@@ -1,0 +1,134 @@
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+  }
+
+  .teacher-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .teacher-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 16px;
+  }
+  
+  .teacher-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .teacher-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .teacher-dob, .teacher-price {
+    font-size: 16px;
+    margin: 8px 0;
+  }
+  
+  .teacher-price {
+    color: #007aff;
+    font-weight: bold;
+  }
+  
+  .teacher-card:hover {
+    transform: translateY(-4px);
+    transition-duration: 0.3s;
+    z-index: 1;
+  }
+  
+  /* Header */
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f2f2f2;
+  }
+  
+  /* Title */
+  .title {
+    font-size: 1.5rem;
+  }
+  
+  /* Sorting */
+  .sorting ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  .sorting li {
+    margin-left: 1rem;
+    cursor: pointer;
+  }
+  
+  /* Active Sorting */
+  .sorting li.active {
+    text-decoration: underline;
+  }
+
+  .sortbyTitle{
+    display: flex;
+    justify-content: center;
+  }
+  
+  .rightSide{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main{
+    list-style-type: none;
+    
+  }
+
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .pagination-item {
+    margin: 0 10px;
+  }
+  
+  .pagination-link {
+    display: block;
+    padding: 8px 16px;
+    background-color: #eee;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pagination-link:hover {
+    background-color: #ccc;
+  }
+  
+  .pagination-item.active .pagination-link {
+    background-color: #333;
+    color: #fff;
+  }
+  
