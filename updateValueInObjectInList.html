@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+      <input type="text" name="name" placeholder="name" required>
+      <input type="text" name="age" placeholder="age" required>
+      <input type="text" name="city" placeholder="city" required>
+     </form>
+    <div class="list"></div>
+  
+    <script>
+      let arrayNames = [];
+      const form = document.querySelector("form");
+      let counter = 0;
+      let isSelected = true
+
+      const submitButton = document.createElement('button')
+      submitButton.classList.add('submitButton')
+      submitButton.type = 'submit'
+      const spanText = document.createElement('span')
+      spanText.innerHTML = "save"
+      submitButton.appendChild(spanText)
+      form.appendChild(submitButton)  
+      
+  
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+  
+        const inputs = e.target.elements;
+  
+        const newObj = {
+          id: counter,
+          name: inputs.name.value,
+          age: inputs.age.value,
+          city: inputs.city.value,
+        };
+  
+        if (newObj.name && newObj.age && newObj.city) {
+            if (isSelected) {
+                arrayNames.push(newObj);
+                console.log(arrayNames);
+                counter += 1;
+                e.target.reset();
+                addToList() 
+              }
+         } else {
+               console.log("All fields are required");
+                }
+      });
+  
+      function addToList() {
+        const list = document.querySelector(".list");
+        let html = "";
+  
+        for (let i of arrayNames) {
+          html += `
+              <div class='newDiv'>${i.name} - ${i.age} - ${i.city}  <button onclick='deleteObject(${i.id})'>delete</button>  <button onclick='updateObject(${i.id})'>update</button><div>
+          `;
+        }
+        list.innerHTML = html;
+      }
+  
+      function deleteObject(id) {
+        arrayNames = arrayNames.filter((obj) => obj.id !== id);
+        console.log(arrayNames);
+        addToList();
+      }
+  
+      function updateObject(id) {
+
+
+        isSelected = false
+        const objIndex = arrayNames.findIndex((obj) => obj.id === id);
+        const obj = arrayNames[objIndex];
+
+        const form = document.querySelector("form");
+        const inputs = form.elements
+        
+        inputs.name.value = obj.name;
+        inputs.age.value = obj.age;
+        inputs.city.value = obj.city;
+
+        const list = document.querySelector(".list");
+        list.innerHTML = `<div class="newDiv">record to update ${inputs.name.value} - ${inputs.age.value} - ${inputs.city.value} </div>`;
+
+        
+      
+        const submitButton = document.querySelector('.submitButton')
+        form.removeChild(submitButton)
+   
+        const newButton = document.createElement('button')
+        newButton.classList.add('updateObjectEdit')
+        newButton.setAttribute('onclick',`updateObjectEdit(${objIndex})`)
+        const spanText = document.createElement('span')
+        spanText.innerHTML = 'update changes'
+        newButton.appendChild(spanText)
+
+        const cancelButton = document.createElement('button')
+        cancelButton.classList.add('cancelButton')
+        const spanTextCancelButton = document.createElement('span')
+        spanTextCancelButton.innerHTML = 'cancel'
+        cancelButton.appendChild(spanTextCancelButton)
+        cancelButton.setAttribute('onclick',`cancelFunction()`)
+        
+
+        form.appendChild(newButton)
+        form.appendChild(cancelButton)
+        
+ 
+    }
+
+    function cancelFunction() {
+    
+        const form = document.querySelector("form");
+        const updateObjectEdit = document.querySelector('.updateObjectEdit')
+        const cancelButton = document.querySelector('.cancelButton')
+        form.removeChild(updateObjectEdit)
+        form.removeChild(cancelButton)
+        form.appendChild(submitButton)
+        isSelected = true
+        addToList()
+    }
+
+    function updateObjectEdit(id) {
+        const form = document.querySelector("form");
+        const updateObjectEdit = document.querySelector('.updateObjectEdit')
+        const cancelButton = document.querySelector('.cancelButton')
+
+        const inputs = form.elements
+       
+        const updatedObj = {
+          id: id,
+          name: inputs.name.value ,
+          age: inputs.age.value,
+          city: inputs.city.value,
+        }; 
+
+        console.log(updatedObj)
+
+        const newArray = arrayNames.map((obj) => {
+                    if (obj.id === updatedObj.id) {
+                    return updatedObj;
+                    }
+                    return obj;
+                });
+
+                arrayNames = newArray;
+                addToList(); 
+
+              
+                form.reset();
+                /* inputs.name.value=''
+                inputs.age.value=''
+                inputs.city.value=''
+                       */
+        
+        form.removeChild(updateObjectEdit)
+        form.removeChild(cancelButton)
+        form.appendChild(submitButton)
+        isSelected = true
+        addToList()
+
+    }
+
+   </script>
+  </body>
+ </html> 
