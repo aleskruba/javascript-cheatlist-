@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    /* Styling for the dialog */
+    dialog[open] {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background overlay */
+    }
+    
+    dialog[open]::backdrop {
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background overlay */
+    }
+    
+    dialog[open] > div {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+  </style>
+</head>
+<body>
+
+<button onclick="openDialog()">Open Dialog</button>
+
+<dialog id="myDialog">
+  <div>
+    <h2>Dialog Window</h2>
+    <p>This is a dialog window example.</p>
+    <button onclick="closeDialog()">Close Dialog</button>
+  </div>
+</dialog>
+
+<script>
+  var dialog = document.getElementById("myDialog");
+
+  function openDialog() {
+    dialog.showModal();
+  }
+
+  function closeDialog() {
+    dialog.close();
+  }
+</script>
+
+</body>
+</html>
