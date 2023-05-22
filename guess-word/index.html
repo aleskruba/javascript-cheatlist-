@@ -1,0 +1,115 @@
+
+
+<div id="app">
+  <h1>JS Starter</h1>
+</div>
+
+<div class="playDiv">
+
+
+  <div class="letters">
+
+
+  </div>
+
+
+<div class="guessingword"></div>
+
+<input class="guessInputWord" placeholder="Guess word">
+<button class="submitButtonWord">Save</button>
+</div>
+<br>
+<div class="resultDiv">
+
+</div>
+/////////////////////////////////////////////////
+
+<script>
+// Import stylesheets
+import './style.css';
+
+const appDiv = document.getElementById('app');
+let counter = 0;
+appDiv.innerHTML = `<h1>${counter} attempts</h1>`;
+
+const guessingword = document.querySelector('.guessingword');
+const string1 = 'river';
+
+const guessingLetters = document.createElement('p');
+let guessedWord = '_'.repeat(string1.length);
+guessingLetters.textContent = guessedWord;
+guessingword.appendChild(guessingLetters);
+
+const submitButtonLetter = document.querySelector('.submitButtonLetter');
+const guessInputLetters = document.querySelector('.guessInputLetters');
+const resultDiv = document.querySelector('.resultDiv');
+const playDiv = document.querySelector('.playDiv')
+
+
+const lettersContainer = document.querySelector('.letters');
+
+for (let i = 97; i <= 122; i++) {
+  const letterButton = String.fromCharCode(i);
+      const button = document.createElement('button');
+      button.textContent = letterButton;
+  
+      button.addEventListener('click', () => {
+        console.log(letterButton);
+        resultDiv.innerHTML = '';
+        const letter = letterButton.toLowerCase();
+        
+        counter += 1;
+        appDiv.innerHTML = `<h1>${counter} attempts</h1>`;
+        let isCorrectGuess = false;
+      
+        guessedWord = Array.from(guessedWord).map((char, index) => {
+          if (string1[index] === letter) {
+            button.disabled = true; // Disable the button
+            isCorrectGuess = true;
+            return letter;
+          }
+          return char;
+        }).join('');
+      
+        if (isCorrectGuess) {
+          resultDiv.innerHTML = 'Nice guess';
+        } else {
+          resultDiv.innerHTML = 'Incorrect guess. Try again.';
+        }
+      
+        if (guessedWord === string1) {
+          playDiv.style.display = "none";
+          resultDiv.innerHTML = 'Congratulations! You guessed the word correctly.';
+        }
+      
+        guessingLetters.textContent = guessedWord;
+      });
+      
+
+
+
+  lettersContainer.appendChild(button);
+}
+
+
+const submitButtonWord = document.querySelector('.submitButtonWord');
+const guessInputWord = document.querySelector('.guessInputWord');
+
+submitButtonWord.addEventListener('click', () => {
+  counter += 1
+  appDiv.innerHTML = `<h1>${counter} attempts</h1>`;
+  const guessedWord = guessInputWord.value;
+  if (guessedWord === string1) {
+    resultDiv.innerHTML = 'Congratulations! You guessed the word correctly.'
+    playDiv.style.display = "none"
+    guessInputWord.value = '';
+  } else {
+    resultDiv.innerHTML = 'Incorrect guess. Try again.'
+  }
+});
+
+  
+ 
+</script>
+  
+  
