@@ -1,0 +1,401 @@
+<html>
+<head>
+  <style>
+    /* Styling for the dialog */
+    dialog[open] {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background overlay */
+    }
+    
+    dialog[open]::backdrop {
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background overlay */
+    }
+    
+    dialog[open] > div {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+
+
+ .myDialogLanguageOptions{
+    display: flex;
+    gap:20px;
+    border-bottom: 1px solid black;
+    padding-bottom: 10px;
+}
+
+.myDialogLanguageOption{
+    display: inline-block; 
+    padding: 10px;
+    background-color: lightgray;
+    color:black;
+    border-radius: 5px;
+}
+  
+.myDialogLanguageOption:hover{
+    background-color: black;
+    color: white;
+}
+
+.myDialogLanguageOption.active{
+    background-color: black;
+    color: white;
+}
+
+ .myDialogSlider {
+    display: flex;
+    justify-content: flex-start; /* Change to 'flex-start' to align the slider to the left */
+    margin-left: 0px; /* Adjust the margin as needed */
+    border-bottom: 1px solid black;
+    padding-bottom: 10px;
+}
+
+    .slider {
+        width: 300px;
+        margin: 50px auto;
+        margin-left: 0px;
+    }
+
+.range-slider {
+  width: 100%;
+  appearance: none; /* Remove default styles */
+  background-color: gray; /* Set slider track color */
+  height: 5px; /* Set slider track height */
+  border-radius: 5px; /* Set slider track border radius */
+  outline: none; /* Remove outline on focus */
+  opacity: 0.7; /* Set opacity for the slider track */
+  transition: opacity 0.2s ease-in-out; /* Add a transition effect to the slider track */
+}
+
+.range-slider::-webkit-slider-thumb {
+  appearance: none; /* Remove default styles */
+  width: 15px; /* Set slider thumb width */
+  height: 15px; /* Set slider thumb height */
+  background-color: gray; /* Set slider thumb color */
+  border-radius: 2px; /* Set slider thumb border radius */
+  cursor: pointer; /* Change cursor on hover */
+}
+
+.range-slider::-moz-range-thumb {
+  /* Firefox */
+  appearance: none; /* Remove default styles */
+  width: 20px; /* Set slider thumb width */
+  height: 20px; /* Set slider thumb height */
+  background-color: gray; /* Set slider thumb color */
+  border-radius: 2px; /* Set slider thumb border radius */
+  cursor: pointer; /* Change cursor on hover */
+}
+
+.circles {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: gray;
+  color: white;
+  cursor: pointer;
+  border-radius: 100%; /* Change border radius to create a small square */
+}
+
+.circle:hover {
+  background-color: lightgray;
+}
+
+.circle.active {
+  background-color: black;
+}
+
+
+.myDialogLanguagePurposeOptions{
+    display: flex;
+    flex-wrap: wrap;
+    gap:20px;
+    border-bottom: 1px solid black;
+    padding-bottom: 10px;
+}
+
+.myDialogLanguagePurposeOption{
+    display: inline-block; 
+    padding: 10px;
+    background-color: lightgray;
+    color:black;
+    border-radius: 5px;
+}
+
+.myDialogLanguagePurposeOption:hover{
+    background-color: black;
+    color: white;
+}
+
+.myDialogLanguagePurposeOption.active{
+    background-color: black;
+    color: white;  
+}
+
+
+
+  .myDialogLanguageMessage textarea {
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+    border: none;
+    background-color: white;
+    color: black;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    resize: none;
+  }
+
+
+  .myDialogButtons{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+  }
+
+
+  .myDialogButtonSave button,
+  .myDialogButtonCancel button {
+    padding: 10px 20px;
+    border: none;
+    background-color: lightgray;
+    color: black;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .myDialogButtonSave button:hover,
+  .myDialogButtonCancel button:hover {
+    background-color: black;
+    color: white;
+  }
+
+
+  .myDialogQuestion {
+  font-size: 20px; /* Adjust the font size as desired */
+  font-weight: bold; /* Apply a bold font weight if desired */
+  color: #333; /* Set the text color */
+  margin-bottom: 10px; /* Add some bottom margin for spacing */
+}
+
+h2 {
+  font-family: Tahoma, sans-serif;
+  font-size: 18px;  
+
+  font-weight: bold; /* Apply a bold font weight if desired */
+  color: #555; /* Set the text color */
+  margin-bottom: 15px; /* Add some bottom margin for spacing */
+}
+
+</style>
+
+
+</head>
+<body>
+
+<button onclick="openDialog()">Open Dialog</button>
+
+<dialog id="myDialog">
+    <div>
+      <div class="myDialogQuestion">
+        <h2>What language do you want to learn with me?</h2>
+      </div>
+        <div class="myDialogLanguageOptions">
+             <div class="myDialogLanguageOption">English</div>
+             <div class="myDialogLanguageOption">Spanish</div>
+        </div>
+      <div class="myDialogQuestion">
+        <h2>What is your language level?</h2>
+      </div>
+
+      <div class="myDialogSlider">
+        <div class="slider">
+           <input type="range" min="0" max="5" step="1" value="0" class="range-slider">
+            <div class="circles">
+            <div class="circle" data-value="A1">A1</div>
+            <div class="circle" data-value="A2">A2</div>
+            <div class="circle" data-value="B1">B1</div>
+            <div class="circle" data-value="B2">B2</div>
+            <div class="circle" data-value="C1">C1</div>
+            <div class="circle" data-value="C2">C2</div>
+            </div>
+        </div>
+    </div>
+  
+      <div class="myDialogQuestion">
+        <h2>Why do you want to learn this language？</h2>     
+      </div>
+
+          <div class="myDialogLanguagePurposeOptions">
+             <div class="myDialogLanguagePurposeOption">Culture</div>
+             <div class="myDialogLanguagePurposeOption">Daily life</div>
+             <div class="myDialogLanguagePurposeOption">Travel</div>
+             <div class="myDialogLanguagePurposeOption">Food</div>
+             <div class="myDialogLanguagePurposeOption">Health</div>
+             <div class="myDialogLanguagePurposeOption">Entertainment</div>
+             <div class="myDialogLanguagePurposeOption">Test Preparation</div>
+             <div class="myDialogLanguagePurposeOption">Family</div>
+             <div class="myDialogLanguagePurposeOption">Business</div>
+             <div class="myDialogLanguagePurposeOption">Other</div>
+        </div>
+
+        <div class="myDialogQuestion">
+            <h2>Feel free to ask me any questions ？</h2> 
+        </div>
+
+        
+        <div class="myDialogLanguageMessage">
+            <textarea name="" id="" cols="30" rows="10"></textarea>
+        </div>
+
+        <div class="myDialogErrorMessage"></div>
+
+        <div class="myDialogButtons">
+            <div class="myDialogButtonSave">
+              <button onclick="SaveLanguageLevel()">Send</button>
+            </div>
+            <div class="myDialogButtonCancel">
+              <button onclick="closeDialog()">Cancel</button>
+            </div>
+          </div>
+    
+    </div>
+  </dialog>
+  
+  <script>
+    var dialog = document.getElementById("myDialog");
+  
+    function openDialog() {
+      dialog.showModal();
+    }
+  
+    function closeDialog() {
+      dialog.close();
+    }
+
+    
+
+    const myDialogErrorMessage = document.querySelector('.myDialogErrorMessage')
+    
+
+    const myDialogLanguagePurposeOptions = document.querySelectorAll('.myDialogLanguagePurposeOption')
+    const myDialogLanguagePurposeOptionsArray = []
+
+    myDialogLanguagePurposeOptions.forEach((purpose, purposeIndex) => {
+        purpose.addEventListener('click', () => {
+         
+            const purposeValue = purpose.textContent;
+            const isActive = purpose.classList.contains('active');
+
+            if (isActive) {
+            purpose.classList.remove('active');
+            const index = myDialogLanguagePurposeOptionsArray.indexOf(purposeValue);
+            if (index !== -1) {
+                myDialogLanguagePurposeOptionsArray.splice(index, 1);
+            }
+            } else {
+            purpose.classList.add('active');
+            myDialogLanguagePurposeOptionsArray.push(purposeValue);
+            }
+
+        });
+        });
+
+    const myDialogLanguageOptions = document.querySelectorAll('.myDialogLanguageOption')
+
+    let languageValue = '';
+    myDialogLanguageOptions.forEach((language, languageIndex) => {
+            language.addEventListener('click', () => {
+                myDialogErrorMessage.innerHTML =''
+                // Remove active class from all language options
+                myDialogLanguageOptions.forEach((option) => {
+                option.classList.remove('active');
+                });
+
+                // Add active class to the clicked language option
+                language.classList.add('active');
+                languageValue = language.textContent;
+            
+            });
+            });
+
+    const circles = document.querySelectorAll('.circle');
+    const rangeSlider = document.querySelector('.range-slider');
+    let circleValue;
+  
+    function updateSliderAndCircle(index) {
+      rangeSlider.value = index;
+  
+      circles.forEach((circle, circleIndex) => {
+        if (circleIndex === index) {
+          circle.classList.add('active');
+        } else {
+          circle.classList.remove('active');
+        }
+      });
+  
+      circleValue = circles[index].dataset.value;
+    }
+  
+    circles.forEach((circle, index) => {
+      circle.addEventListener('click', () => {
+        updateSliderAndCircle(index);
+      });
+    });
+  
+    rangeSlider.addEventListener('input', () => {
+    const value = rangeSlider.value;
+    updateSliderAndCircle(value);
+
+    circles.forEach((circle, index) => {
+      if (index == value) {
+        circle.classList.add('active');
+      } else {
+        circle.classList.remove('active');
+      }
+    });
+  });
+
+
+  let constAreaValue;
+  const textarea = document.querySelector('.myDialogLanguageMessage textarea');
+
+    textarea.addEventListener('input', () => {
+    constAreaValue = textarea.value
+  });
+
+
+
+ 
+
+    function SaveLanguageLevel() {
+    if (languageValue.trim() === '') {
+        myDialogErrorMessage.innerHTML = "You have to select at least a language you want to learn"
+        return;
+    }
+      console.log(languageValue)  
+      console.log(circleValue);
+      console.log(myDialogLanguagePurposeOptionsArray)
+      console.log(constAreaValue)
+    }
+  </script>
+  
+    
+
+</body>
+</html>
