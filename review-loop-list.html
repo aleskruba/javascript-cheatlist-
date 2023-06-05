@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Poppins:wght@200;400&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<style>
+
+
+.reviewMainDiv{
+
+}
+
+.showMoreReviews{
+
+}
+
+.reviews {
+  position: relative;
+  background-color: aquamarine;
+  width: 650px;
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 50px;
+  opacity: 0;
+  transition: opacity 2.5s ease; 
+}
+
+.showMoreReviews{
+    cursor: pointer;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 15px;
+    font-weight: 700;
+    opacity: 50%;
+}
+
+.reviewBox{
+    display: flex;
+    margin-top: 15px;
+    margin-left: 15px;
+    margin-bottom: 15px;
+    flex-direction: column;
+    width: 300px;
+    background-color:#F8F8F8;
+    border-radius: 5px; 
+}
+.reviewBoxTop{
+    height: 60px;
+    display: flex;
+}
+
+.reviewBoxTopImg{
+            flex:1;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            padding-right: 10px;
+            border-radius: 5px 0 0 0;
+        }
+
+.reviewBoxTopImg img {
+            
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+.reviewBoxTopRight{
+    flex-direction: column;
+    flex:5;
+    border-radius: 0 15px 0 0;
+}
+
+.reviewBoxTopRightName{
+    border-radius: 0 0 15px 15px;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+}
+
+.reviewBoxTopRightLessons{
+    padding-left: 10px;
+    font-family: Noto Sans,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;;
+    font-size: 12px;
+    opacity: 50%;
+    }
+
+.reviewBoxMiddle{
+    padding-left: 10px;
+    padding-top: 10px;
+    font-family: Noto Sans,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;;
+    font-size: 13px;
+    font-weight: 500;
+
+}
+
+.reviewBoxBottom{
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    font-family: Noto Sans,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;;
+    font-size: 12px;
+    opacity: 50%;
+    
+}
+
+</style>
+<body>
+
+
+ <div class="reviewMainDiv">
+     
+        <div class="reviews">
+        
+
+         
+       </div>
+     
+ 
+    </div>
+<script>
+
+const students = [
+  {
+    name: 'Hagai',
+    lesson: '1 Spanish lesson',
+    img: 'https://images.pexels.com/photos/3586798/pexels-photo-3586798.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    review: 'Maria es una profesora muy buena, con ella estábamos haciendo muchos ejercicios, ella me ayudaba mucho con tiempo pasado! Quiero continuar nuestra educación!',
+    createAt: 'Jun 1, 2022'
+  },
+  {
+    name: 'John',
+    lesson: '3 French lessons',
+    img: 'https://images.pexels.com/photos/3586798/pexels-photo-3586798.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    review: 'Marie est une très bonne enseignante, nous avons fait beaucoup d\'exercices ensemble. Elle m\'a beaucoup aidé avec le passé composé ! Je veux continuer notre éducation !',
+    createAt: 'Jun 2, 2020'
+  },
+  {
+    name: 'Emily',
+    lesson: '2 Italian lessons',
+    img: 'https://images.pexels.com/photos/3586798/pexels-photo-3586798.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    review: 'Maria è una bravissima insegnante, abbiamo fatto molti esercizi insieme. Mi ha aiutato molto con i verbi irregolari! Voglio continuare la nostra educazione!',
+    createAt: 'Apr 3, 2023'
+  },
+  // Add more objects following the same structure...
+  {
+    name: 'Luis',
+    lesson: '4 Portuguese lessons',
+    img: 'https://images.pexels.com/photos/3586798/pexels-photo-3586798.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    review: 'Maria é uma excelente professora, fizemos muitos exercícios juntos. Ela me ajudou muito com os verbos regulares! Quero continuar nossa educação!',
+    createAt: 'Jul 4, 2018'
+  },
+  {
+    name: 'Sophia',
+    lesson: '1 German lesson',
+    img: 'https://images.pexels.com/photos/3586798/pexels-photo-3586798.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    review: 'Maria ist eine sehr gute Lehrerin, wir haben viele Übungen gemacht. Sie hat mir sehr mit den unregelmäßigen Verben geholfen! Ich möchte unsere Ausbildung fortsetzen!',
+    createAt: 'Dec 5, 2021'
+  },
+  {
+    name: 'Sophia',
+    lesson: '1 German lesson',
+    img: 'https://images.pexels.com/photos/3586798/pexels-photo-3586798.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    review: 'Maria ist eine sehr gute Lehrerin, wir haben viele Übungen gemacht. Sie hat mir sehr mit den unregelmäßigen Verben geholfen! Ich möchte unsere Ausbildung fortsetzen!',
+    createAt: 'Jun 5, 2023'
+  },
+  {
+    name: 'Sophia',
+    lesson: '1 German lesson',
+    img: 'https://images.pexels.com/photos/3586798/pexels-photo-3586798.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    review: 'Maria ist eine sehr gute Lehrerin, wir haben viele Übungen gemacht. Sie hat mir sehr mit den unregelmäßigen Verben geholfen! Ich möchte unsere Ausbildung fortsetzen!',
+    createAt: 'Jun 5, 2023'
+  },
+  {
+    name: 'Sophia',
+    lesson: '1 German lesson',
+    img: 'https://images.pexels.com/photos/3586798/pexels-photo-3586798.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    review: 'Maria ist eine sehr gute Lehrerin, wir haben viele Übungen gemacht. Sie hat mir sehr mit den unregelmäßigen Verben geholfen! Ich möchte unsere Ausbildung fortsetzen!',
+    createAt: 'Jun 5, 2023'
+  },
+  {
+    name: 'Sophia',
+    lesson: '1 German lesson',
+    img: 'https://images.pexels.com/photos/3586798/pexels-photo-3586798.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    review: 'Maria ist eine sehr gute Lehrerin, wir haben viele Übungen gemacht. Sie hat mir sehr mit den unregelmäßigen Verben geholfen! Ich möchte unsere Ausbildung fortsetzen!',
+    createAt: 'Jun 5, 2023'
+  }
+  // Add more objects following the same structure...
+];
+
+
+const reviews = document.querySelector('.reviews');
+let html = '';
+let updateIndex = 4;
+
+function studentArray() {
+  html = ''; // Clear the previous HTML content
+  const sortedStudents = students.sort((b, a) => {
+    return new Date(a.createAt) - new Date(b.createAt);
+  });
+
+  for (let i = 0; i < updateIndex && i < sortedStudents.length; i++) {
+    const student = sortedStudents[i];
+    html += `
+      <div class="reviewBox">
+        <div class="reviewBoxTop">
+          <div class="reviewBoxTopImg"><img src="${student.img}" alt=""></div>
+          <div class="reviewBoxTopRight">
+            <div class="reviewBoxTopRightName">${student.name}</div>
+            <div class="reviewBoxTopRightLessons">${student.lesson}</div>
+          </div>
+        </div>
+        <div class="reviewBoxMiddle">
+          ${student.review}
+        </div>
+        <div class="reviewBoxBottom">
+          ${student.createAt}
+        </div>
+      </div>
+    `;
+  }
+  reviews.innerHTML = html;
+  reviews.style.opacity = 1; // Set opacity to 1 to trigger the transition
+  const newDiv = document.createElement('div');
+  newDiv.setAttribute('onclick', 'showMoreReviews()');
+  newDiv.classList.add('showMoreReviews');
+  newDiv.innerHTML = 'Show More';
+  reviews.appendChild(newDiv);
+}
+
+function showMoreReviews() {
+  updateIndex += 4;
+  studentArray();
+}
+
+studentArray();
+
+
+
+</script>
+
+</body>
+
+</html>
