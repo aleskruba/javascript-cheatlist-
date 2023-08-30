@@ -19,3 +19,16 @@ console.log(unixTimestampMilliseconds)
 
 const unixTimestampSeconds = unixTimestampMilliseconds / 1000;
 console.log(unixTimestampSeconds);
+
+/// convert back 
+const startDate = new Date('2023-08-29T00:00:00');
+        const currentDate = new Date();
+        console.log(currentDate);
+        
+        const unixFormat = Date.parse(currentDate); // Unix timestamp in milliseconds
+        console.log(unixFormat);
+
+        const originalCommonFormat =  new Date(unixFormat).toISOString()
+        
+        console.log(originalCommonFormat);
+
